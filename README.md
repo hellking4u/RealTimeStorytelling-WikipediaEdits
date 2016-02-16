@@ -1,6 +1,24 @@
 # RealTimeStorytelling-WikipediaEdits
 A map showing anonymous edits made to Wikipedia in real time.
 
+## Running the Code
+#### Websocket Server
+```
+websocketd --port 5000 python -u ws.py
+```
+Note the ```-u``` after python. This forces python to work with unbuffered stdout, which is what we want when using it with websocketd.
+
+#### Web Server
+```
+ python -m SimpleHTTPServer
+```
+
+Python 3 users on Windows should use the http.server module.
+
+```
+python -m http.server [<portNo>]
+```
+
 ## Stream Description
 The aim of the project was to try and map out geolocatable wikipedia edits in real time. Fortunately, *Wikipedia* publishes it's recent changes in an IRC feed (details of which can be found here : ```https://meta.wikimedia.org/wiki/IRC/Channels#Wikipedia```). This saves a tremendous amount of time as we need not poll the service. To make our lives easier still, a github user **hatnote** has create a repo to consume this IRC feed and create a public websocket URL to consume. The repo can be found here : ```https://github.com/hatnote/wikimon```.
 

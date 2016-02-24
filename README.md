@@ -23,7 +23,7 @@ python -m http.server [<portNo>]
 The aim of the project was to try and map out geolocatable wikipedia edits in real time. Fortunately, *Wikipedia* publishes it's recent changes in an IRC feed (details of which can be found here : ```https://meta.wikimedia.org/wiki/IRC/Channels#Wikipedia```). This saves a tremendous amount of time as we need not poll the service. To make our lives easier still, a github user **hatnote** has create a repo to consume this IRC feed and create a public websocket URL to consume. The repo can be found here : ```https://github.com/hatnote/wikimon```.
 
 The websocket stream has a JSON like description, with multiple required fields. [1]
-
+```json
     {"is_minor": false,
      "page_title": "Template:Citation needed/testcases",
      "url": "http://en.wikipedia.org/w/index.php?diff=553804313&oldid=479472901",
@@ -49,7 +49,7 @@ The websocket stream has a JSON like description, with multiple required fields.
      "is_anon": false,
      "ns": "Main",
      "change_size": "+1"}
-
+```
 ## Stream Processing
 We use the *Wikimon* websocket connection to recieve real-time edits. We filter the data which is actually a 'Page' edit and not an edit on the 'Talk' page or 'Special' page. We consequently filter on anonymous edits as they contain the geolocation of the editor. While tracking registered edits might be feasible, it would entail significantly more probing. Limiting tracking to anonymous edits means we tap into approximately 15% of the total stream, but it also makes the stream a more manageable size, with about 1 edit per second.
 

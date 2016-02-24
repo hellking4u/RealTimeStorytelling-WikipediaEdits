@@ -1,3 +1,6 @@
+"""
+Module to analyze rate of stream on Redis and notify using SNS if the rate is above (or below) a certain threshhold.
+"""
 import redis
 import json
 import time

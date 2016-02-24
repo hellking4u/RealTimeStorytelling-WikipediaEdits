@@ -22,7 +22,7 @@ python -m http.server [<portNo>]
 ## Stream Description
 The aim of the project was to try and map out geolocatable wikipedia edits in real time. Fortunately, *Wikipedia* publishes it's recent changes in an IRC feed (details of which can be found here : ```https://meta.wikimedia.org/wiki/IRC/Channels#Wikipedia```). This saves a tremendous amount of time as we need not poll the service. To make our lives easier still, a github user **hatnote** has create a repo to consume this IRC feed and create a public websocket URL to consume. The repo can be found here : ```https://github.com/hatnote/wikimon```.
 
-The websocket stream has a JSON like description, with multiple required fields.
+The websocket stream has a JSON like description, with multiple required fields. [1]
 
     {"is_minor": false,
      "page_title": "Template:Citation needed/testcases",
@@ -59,3 +59,5 @@ For rendering the data, we use the WebGL Earth Library (```http://www.webglearth
 We specifically focus on a certain set of keys to be displayed, which are defined in ```config.json```. One may need to move around the map a little to see the edits. 
 
 The background starfield effects were taken almost verbatim from the tutorial found at ```https://www.script-tutorials.com/night-sky-with-twinkling-stars/``` (minor edits were made to make it compatible with the WebGL library)
+
+[1] https://github.com/hatnote/wikimon

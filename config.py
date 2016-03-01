@@ -9,3 +9,6 @@ retain_keys = ['page_title', 'url', 'geo_ip', 'summary', 'change_size']
 SERVER_ADDRESS = "{0}:{1}".format(SERVER_HOST, SERVER_PORT)
 
 ANALYZE_TIME = 60
+
+LOW_RATE = 3
+HIGH_RATE = 5

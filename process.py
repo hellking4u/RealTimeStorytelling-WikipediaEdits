@@ -20,6 +20,8 @@ import redis as rLib
 import config
 
 last = 0
+
+# Set up redis on the default port and use the database 15 to store these keys.
 redis = rLib.Redis(db=15)
 
 # We run the loop continuously and keep piping JSON input to output, with the changes.

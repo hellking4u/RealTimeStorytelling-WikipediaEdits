@@ -61,3 +61,17 @@ We specifically focus on a certain set of keys to be displayed, which are define
 The background starfield effects were taken almost verbatim from the tutorial found at ```https://www.script-tutorials.com/night-sky-with-twinkling-stars/``` (minor edits were made to make it compatible with the WebGL library)
 
 [1] https://github.com/hatnote/wikimon
+
+------------------------------------------------
+# Assignment 2
+
+For this assignment, we've tried to make a rate alert using Redis and Amazon's SNS. The configurations for the analyze module is set in `config.py`. The system can be run with the simple command
+
+```
+python -u ws.py | process.py
+```
+
+To run the script to track the rate of stream, use
+```
+python analyze.py
+```

@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
+
 """
 Python script to pull data from the wikipedia edits websocket connection, filter it a bit, and 
 return the json formatted string.
@@ -12,6 +15,8 @@ import json
 # such as the analyze time, verbosity, and the server addresses.
 import config 
 
+
+import distribution
 
 class MyClientProtocol(WebSocketClient):
     """
@@ -49,7 +54,8 @@ class MyClientProtocol(WebSocketClient):
         # since they are not part of the data we are wishing to capture in this scope.
         try:
             x = json.loads(data)
-            if x['page_title'][:5] != "Talk:" and x['page_title'][:9] != "Special:" and x['is_anon'] == True: # filter to remove non page edits and discussions
+            distribution.categorize_and_push_to_redis(x)
+            if x['page_title'][:5] != "Talk:" and x['page_title'][:8] != "Special:" and x['is_anon'] == True: # filter to remove non page edits and discussions
                 nd = dict()
                 #retain only a subset of the keys that we are interested in. These keys are defined in the config file
                 for key in config.retain_keys: 
@@ -58,6 +64,7 @@ class MyClientProtocol(WebSocketClient):
         except Exception as e:
             if config.verbose:
                 print "JSON Decode Error in {0}".format(data)
+                return 0
             pass
 
 if __name__ == '__main__':

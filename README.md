@@ -1,6 +1,13 @@
 # RealTimeStorytelling-WikipediaEdits
 A map showing anonymous edits made to Wikipedia in real time.
 
+EDIT : Now also includes an analytics dashboard.
+
+### The Map
+![alt tag](https://raw.githubusercontent.com/hellking4u/RealTimeStorytelling-WikipediaEdits/master/screen1.png)
+
+### The Analytics Dashboard
+![alt tag](https://raw.githubusercontent.com/hellking4u/RealTimeStorytelling-WikipediaEdits/master/screen2.png)
 ## Running the Code
 #### Websocket Server
 ```
@@ -75,3 +82,41 @@ To run the script to track the rate of stream, use
 ```
 python analyze.py
 ```
+------------------------------------------------
+# Assignment 3
+
+For this assigment, we built a snazzy dashboard to track the distribution of our messages.
+
+The distribution would be defined on a set of binary variables such as 
+1. Page Type (Special Page or Talk Page or Neither)
+2. Is anonymous (true, false)
+
+Therefore, we have 3*2 = 6 categories, and the distribution is essentially a *categorical* distribution.
+
+## Running the Assignment
+I have now set up a flask server for both the main display and the analytics dashboard.
+
+To run the websocket, run
+```
+websocket --port 5000 python -u ws.py
+```
+
+To run the analytics server, run :
+
+```
+sudo python server.py
+```
+Note that the server needs to run as root, since the python system 
+## Additional Categorical Variables?
+We could obviously extend the analysis to include additional categories. The way code is laid out right now, it's extremely easy to add further discrete feature into the mix. Just go to `distribution.py` and we just have to set up a nice function to return a string based on the category, and make sure out `categorize_and_push_to_redis` function is aware of this function.
+
+The system to build and maintain the dashboard is agnoistic to the number of categorical variables chosen. It will figure that out from the Redis Keys.
+
+#### Adding more variables
+As stated previously, just make a function that returns a different string for any categorical variable. But since Redis uses this string 'as-is' to render the dashboard, it would be helpful to use a descriptive string as 'is-bot' or 'is-not-bot'. Also. **PLEASE DO NOT INCLUDE SPACES OR UNDERSCORE IN THIS STRING**. Use hyphens instead of spaces.
+
+## Stream Entropy Analysis
+
+For a stream such as Wikipedia Edits, it's a worthwhile endeavour to build a notification system around the entropy of the distribution. Since the distribution is expected to be largely stable, it would be really useful to any irregularities, since that might show something really useful (such as vandalism or server error).
+
+Also, Since the stream is largely unpredicatable (the stream edits form a markovian chain), the best way to predict the next message would be to use markovian chain analysis. Since no (trivial) ibrary supports Markvoian chains, I just decided to use the prior probabilities as the basis for choosing the next expected message.

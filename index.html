@@ -48,12 +48,12 @@
       }
 
       .stars {
-        background:#000 url(data/stars.png) repeat top center;
+        background:#000 url({{ url_for('static', filename = 'data/stars.png') }}) repeat top center;
         z-index:-3;
       }
 
       .twinkling{
-        background:transparent url(data/twinkling.png) repeat top center;
+        background:transparent url({{ url_for('static', filename = 'data/twinkling.png') }}) repeat top center;
         z-index:-2;
 
         -moz-animation:move-twink-back 200s linear infinite;
@@ -64,7 +64,7 @@
       }
 
       .clouds{
-          background:transparent url(data/clouds.png) repeat top center;
+          background:transparent url({{ url_for('static', filename = 'data/clouds.png') }}) repeat top center;
           z-index:-1;
 
         -moz-animation:move-clouds-back 200s linear infinite;
@@ -76,7 +76,7 @@
 
     </style>
     <script src="http://www.webglearth.com/v2/api.js"></script>
-    <script type="text/javascript" src ="js/util.js"></script>
+    <script type="text/javascript" src ="{{ url_for('static', filename = 'js/util.js') }}"></script>
     <script>
     markers = [];
       function clearAll() //a truly brute force approach to closing markers. I wish webglEarth exposed a list of attached markers.
@@ -104,7 +104,7 @@
       }
       function setUpWS() //websocket setup
       {
-        var ws = new WebSocket("ws://localhost:5000")
+        var ws = new WebSocket('ws://localhost:5000')
         ws.onmessage = function(msg)
           {
             var data = JSON.parse(msg.data);

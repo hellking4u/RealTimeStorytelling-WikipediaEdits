@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Distribution Tracking Analytics</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+<style type="text/css">
+   body
+   {
+      /*background-color: #000000;*/
+      background-image: url("{{ url_for('static', filename = 'bg.jpg') }}");
+      background-size: 100%;
+   }
+   h1
+   {
+      color: #BB8EFF;
+      font-family: 'Open Sans', sans-serif;
+      text-align: center;
+   }
+   .section
+   {
+      margin: 20px;
+      border: #222222 solid;
+      border-radius: 15px;
+      background-color: rgba(255, 255, 255, 0.1);
+      background-opacity: 0.2;
+      padding: 20px;
+
+      font-family: 'Open Sans', sans-serif;
+      color: #B3B3B3;
+      font-size: 100%;
+   }
+   .emphasis
+   {
+      font-size: 150%;
+      color: #6EBAF3;
+   }
+   .percent
+   {
+      color: #6EBAF3;
+   }
+</style>
+</head>
+<body>
+
+<h1> Real Time Analytics - Wikipedia Edits</h1>
+<div id="myfirstchart" style="height: 250px;" class='section'></div>
+
+<div class='section'>
+<ul>
+
+{% for point in data %}
+<li>{{point.x}} : <span class='emphasis'>{{point.y|int}}</span>/{{total}} <span class='percent'>({{(point.y*100/total)|round}}%)</span></li>
+{% endfor %}
+</ul>
+</div>
+<div class='section'>
+<ul>
+{% for point in bullet_data %}
+<li>{{point}} : <span class='emphasis'>{{bullet_data[point]|safe}}</span></span></li>
+{% endfor %}
+
+</ul>
+</div>
+<script type="text/javascript">
+      function prepareChart()
+      {
+         new Morris.Bar({
+            // ID of the element in which to draw the chart.
+            element: 'myfirstchart',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: [
+            {% for point in data %}
+            { x: '{{point.x}}', a: {{point.y}}},
+            {% endfor %}
+             { x: 'Total', a: {{total}}}
+            ],
+            xkey: 'x',
+            ykeys: ['a'],
+            labels: ['counts']
+
+       });     
+      }
+   $(document).ready(prepareChart())
+</script>
+</body>
+</html>

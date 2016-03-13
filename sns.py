@@ -21,7 +21,7 @@ import boto3
 client = boto3.client('sns', region_name = 'us-east-1')
 
 
-def sendNotification(msg):
+def sendNotification(msg, subject='Unusual Stream Rate'):
 	"""
 	Send notifications to a topic ARN (which is basically the topic ID) with the msg and a subject.
 
@@ -32,8 +32,9 @@ def sendNotification(msg):
 	response = client.publish(
     TopicArn='arn:aws:sns:us-east-1:002265909788:Wikipedia-Edits',
     Message=msg,
-    Subject='Unusual Stream Rate'
+    Subject=subject
 	)
+	print subject, msg
 	return response
 
 
